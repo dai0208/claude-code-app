@@ -5,6 +5,7 @@ function defaultState() {
   return {
     coins: 50,
     silverCarrots: 0,
+    lastCoinTime: Date.now(),
     yard: Array.from({ length: SLOT_COUNT }, (_, i) => ({ slotId: i, itemId: null, rabbit: null })),
     inventory: { carrot: 3 },
     caughtRabbits: [],
@@ -275,7 +276,8 @@ function renderShop() {
 
   panel.innerHTML = `
     <h2>🏪 お店</h2>
-    <div class="shop-balance">🪙 コイン: ${state.coins}</div>
+    <div class="shop-balance">🪙 コイン: ${state.coins} / ${COIN_MAX}</div>
+    <p class="shop-coin-desc">🐰 うさぎが1時間に1枚ずつコインを持ってきてくれます（上限${COIN_MAX}枚）</p>
     <div class="shop-section-title">🍽️ 食べ物</div>
     <div class="shop-grid" id="food-grid"></div>
     <div class="shop-section-title">🪁 おもちゃ</div>
@@ -439,6 +441,7 @@ function departRabbit(slotId, rabbit) {
 
   // にんじんドロップ
   state.coins += rabbit.power;
+  clampCoins();
 
   // 確率で記念品
   const alreadyHasMemento = state.mementos.some(m => m.rabbitId === rabbit.id);
@@ -487,6 +490,7 @@ function photographRabbit(slotId, rabbitId) {
   // コイン獲得（撮影ボーナス）
   const bonus = isNew ? rabbit.power * 3 : rabbit.power;
   state.coins += bonus;
+  clampCoins();
 
   // ウサギをマスから消し、アイテムをインベントリに戻す
   const stateSlot = state.yard[slotId];
@@ -540,9 +544,28 @@ function gameLoop() {
 }
 
 // ===== ヘッダー更新 =====
+const COIN_MAX = 300;
+const COIN_REGEN_MS = 3600000; // 1時間
+
+// ===== コイン自動増加 =====
+function updatePassiveCoins() {
+  const now = Date.now();
+  const hours = Math.floor((now - state.lastCoinTime) / COIN_REGEN_MS);
+  if (hours > 0) {
+    state.coins = Math.min(state.coins + hours, COIN_MAX);
+    state.lastCoinTime += hours * COIN_REGEN_MS;
+    saveState();
+    updateHeader();
+  }
+}
+
+function clampCoins() {
+  state.coins = Math.min(state.coins, COIN_MAX);
+}
+
 function updateHeader() {
   const el = document.getElementById("coin-count");
-  if (el) el.textContent = state.coins;
+  if (el) el.textContent = `${state.coins}/${COIN_MAX}`;
   const sel = document.getElementById("silver-count");
   if (sel) sel.textContent = state.silverCarrots;
 }
@@ -592,6 +615,7 @@ function initGame() {
   initTabs();
   renderYard();
   renderAlbum();
+  updatePassiveCoins();
   updateHeader();
 
   // ゲームループ開始
@@ -600,6 +624,9 @@ function initGame() {
     renderYard();
     updateHeader();
   }, LOOP_INTERVAL);
+
+  // コイン自動増加チェック（1分ごと）
+  setInterval(updatePassiveCoins, 60000);
 
   startCountdown();
 }
