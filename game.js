@@ -278,6 +278,7 @@ function renderShop() {
     <h2>🏪 お店</h2>
     <div class="shop-balance">🪙 コイン: ${state.coins} / ${COIN_MAX}</div>
     <p class="shop-coin-desc">🐰 うさぎが1時間に1枚ずつコインを持ってきてくれます（上限${COIN_MAX}枚）</p>
+    <p class="shop-coin-desc">🥕 庭に置いた食べ物・おもちゃは50%の確率でうさぎさんが消費します</p>
     <div class="shop-section-title">🍽️ 食べ物</div>
     <div class="shop-grid" id="food-grid"></div>
     <div class="shop-section-title">🪁 おもちゃ</div>
@@ -492,12 +493,15 @@ function photographRabbit(slotId, rabbitId) {
   state.coins += bonus;
   clampCoins();
 
-  // ウサギをマスから消し、アイテムをインベントリに戻す
+  // ウサギをマスから消し、アイテムを50%の確率で消費
   const stateSlot = state.yard[slotId];
   if (stateSlot) {
     stateSlot.rabbit = null;
     if (stateSlot.itemId) {
-      state.inventory[stateSlot.itemId] = (state.inventory[stateSlot.itemId] || 0) + 1;
+      const consumed = Math.random() < 0.5;
+      if (!consumed) {
+        state.inventory[stateSlot.itemId] = (state.inventory[stateSlot.itemId] || 0) + 1;
+      }
       stateSlot.itemId = null;
     }
   }
