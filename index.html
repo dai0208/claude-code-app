@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>大久野島ウサギコレクション</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ヘッダー -->
+  <header id="header">
+    <h1>🐰 大久野島</h1>
+    <div id="currency-display">
+      <div class="currency-item">
+        <span class="currency-icon">🥕</span>
+        <span id="carrot-count">50</span>
+      </div>
+      <div class="currency-item">
+        <span class="currency-icon">⭐</span>
+        <span id="silver-count">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ループ表示 -->
+  <div id="loop-indicator">次のループ: 30秒</div>
+
+  <!-- コンテンツ -->
+  <main id="content">
+
+    <!-- 庭タブ -->
+    <div id="yard-panel" class="tab-panel active">
+      <!-- 背景 -->
+      <div class="yard-bg">
+        <div class="sky"></div>
+        <div class="sun"></div>
+        <div class="sea"></div>
+        <div class="grass"></div>
+        <div class="deco-flowers"></div>
+      </div>
+      <!-- スロット -->
+      <div id="yard-slots"></div>
+    </div>
+
+    <!-- 図鑑タブ -->
+    <div id="album-panel" class="tab-panel">
+      <!-- renderAlbum() で描画 -->
+    </div>
+
+    <!-- 記念品タブ -->
+    <div id="memento-panel" class="tab-panel">
+      <!-- renderMementos() で描画 -->
+    </div>
+
+    <!-- お店タブ -->
+    <div id="shop-panel" class="tab-panel">
+      <!-- renderShop() で描画 -->
+    </div>
+
+  </main>
+
+  <!-- ボトムタブバー -->
+  <nav id="tab-bar">
+    <button class="tab-btn active" data-tab="yard">
+      <span class="tab-icon">🌿</span>
+      <span>庭</span>
+    </button>
+    <button class="tab-btn" data-tab="album">
+      <span class="tab-icon">📖</span>
+      <span>図鑑</span>
+    </button>
+    <button class="tab-btn" data-tab="memento">
+      <span class="tab-icon">🎁</span>
+      <span>記念品</span>
+    </button>
+    <button class="tab-btn" data-tab="shop">
+      <span class="tab-icon">🏪</span>
+      <span>お店</span>
+    </button>
+  </nav>
+
+</div><!-- /#app -->
+
+<!-- アイテム選択モーダル -->
+<div id="item-modal">
+  <div class="modal-sheet">
+    <div class="modal-title">
+      <span>置くアイテムを選ぶ</span>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-options" id="modal-options">
+      <!-- JS で描画 -->
+    </div>
+    <button class="modal-remove" id="modal-remove" style="display:none">
+      🗑️ アイテムを取り除く
+    </button>
+  </div>
+</div>
+
+<!-- トースト通知 -->
+<div id="toast"></div>
+
+<script src="data.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
