@@ -3,7 +3,7 @@ const SAVE_KEY = "okunoshima_save";
 
 function defaultState() {
   return {
-    carrots: 50,
+    coins: 50,
     silverCarrots: 0,
     yard: Array.from({ length: SLOT_COUNT }, (_, i) => ({ slotId: i, itemId: null, rabbit: null })),
     inventory: { carrot: 3 },
@@ -26,6 +26,11 @@ function loadState() {
     const raw = localStorage.getItem(SAVE_KEY);
     if (raw) {
       const saved = JSON.parse(raw);
+      // 旧セーブ（carrots）→ coins へ移行
+      if (saved.carrots !== undefined && saved.coins === undefined) {
+        saved.coins = saved.carrots;
+        delete saved.carrots;
+      }
       // マージ（新フィールド対応）
       return Object.assign(defaultState(), saved);
     }
@@ -58,14 +63,13 @@ function showToast(msg, duration = 2000) {
   setTimeout(() => el.classList.remove("show"), duration);
 }
 
-function showBanner(rabbit) {
+function showBanner(rabbit, isNew, bonus) {
   const el = document.createElement("div");
   el.className = "new-rabbit-banner";
-  const isNew = !state.caughtRabbits.includes(rabbit.id);
   el.innerHTML = `
     <div class="banner-title">${isNew ? "🎉 新しいウサギを発見！" : "📷 撮影成功！"}</div>
     <div class="banner-name">${rabbit.name}</div>
-    <div class="banner-sub">${isNew ? "図鑑に登録されました" : `にんじん +${rabbit.power}個`}</div>
+    <div class="banner-sub">${isNew ? `図鑑に登録されました　🪙 +${bonus}` : `🪙 +${bonus}`}</div>
   `;
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 2500);
@@ -271,7 +275,7 @@ function renderShop() {
 
   panel.innerHTML = `
     <h2>🏪 お店</h2>
-    <div class="shop-balance">🥕 にんじん: ${state.carrots}</div>
+    <div class="shop-balance">🪙 コイン: ${state.coins}</div>
     <div class="shop-section-title">🍽️ 食べ物</div>
     <div class="shop-grid" id="food-grid"></div>
     <div class="shop-section-title">🪁 おもちゃ</div>
@@ -285,7 +289,7 @@ function renderShop() {
     const grid = document.getElementById(gridId);
     items.forEach(item => {
       const own = state.inventory[item.id] || 0;
-      const canAfford = state.carrots >= item.cost;
+      const canAfford = state.coins >= item.cost;
 
       const card = document.createElement("div");
       card.className = `shop-card ${canAfford ? "" : "cant-afford"}`;
@@ -312,11 +316,11 @@ function renderShop() {
 function buyItem(itemId) {
   const item = getItem(itemId);
   if (!item) return;
-  if (state.carrots < item.cost) {
+  if (state.coins < item.cost) {
     showToast("にんじんが足りません！");
     return;
   }
-  state.carrots -= item.cost;
+  state.coins -= item.cost;
   state.inventory[itemId] = (state.inventory[itemId] || 0) + 1;
   saveState();
   renderShop();
@@ -434,7 +438,7 @@ function departRabbit(slotId, rabbit) {
   if (!slot || slot.rabbit !== rabbit.id) return;
 
   // にんじんドロップ
-  state.carrots += rabbit.power;
+  state.coins += rabbit.power;
 
   // 確率で記念品
   const alreadyHasMemento = state.mementos.some(m => m.rabbitId === rabbit.id);
@@ -480,9 +484,9 @@ function photographRabbit(slotId, rabbitId) {
     state.caughtRabbits.push(rabbitId);
   }
 
-  // にんじん獲得（撮影ボーナス）
+  // コイン獲得（撮影ボーナス）
   const bonus = isNew ? rabbit.power * 3 : rabbit.power;
-  state.carrots += bonus;
+  state.coins += bonus;
 
   // ウサギをマスから消し、アイテムをインベントリに戻す
   const stateSlot = state.yard[slotId];
@@ -494,7 +498,7 @@ function photographRabbit(slotId, rabbitId) {
     }
   }
 
-  showBanner(rabbit);
+  showBanner(rabbit, isNew, bonus);
   saveState();
   updateHeader();
   renderAlbum();
@@ -537,8 +541,8 @@ function gameLoop() {
 
 // ===== ヘッダー更新 =====
 function updateHeader() {
-  const el = document.getElementById("carrot-count");
-  if (el) el.textContent = state.carrots;
+  const el = document.getElementById("coin-count");
+  if (el) el.textContent = state.coins;
   const sel = document.getElementById("silver-count");
   if (sel) sel.textContent = state.silverCarrots;
 }
