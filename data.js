@@ -1,25 +1,26 @@
 // ===== ウサギデータ =====
 const RABBITS = [
-  { id: "shiromochi", name: "しろもち",   color: "#f5f5f0", earColor: "#ffd6d6", eyeColor: "#333",    noseColor: "#ffb6c1", rarity: "common",  favoriteItems: ["carrot", "cushion"],       memento: "小さな葉っぱ", power: 3 },
-  { id: "kuro",       name: "くろ",       color: "#2a2a2a", earColor: "#555",    eyeColor: "#ff6b6b", noseColor: "#ff9999", rarity: "common",  favoriteItems: ["cabbage", "cardboard"],    memento: "黒い毛",       power: 3 },
-  { id: "chacha",     name: "ちゃちゃ",   color: "#c8956c", earColor: "#e8b494", eyeColor: "#333",    noseColor: "#ffb6c1", rarity: "common",  favoriteItems: ["carrot", "tunnel"],        memento: "土の塊",       power: 3 },
-  { id: "mikan",      name: "みかん",     color: "#f4a460", earColor: "#f5c68c", eyeColor: "#333",    noseColor: "#ff8c69", rarity: "common",  favoriteItems: ["grass", "ball"],           memento: "オレンジの欠片", power: 3 },
-  { id: "yuki",       name: "ゆき",       color: "#eef4ff", earColor: "#c8d8ff", eyeColor: "#6699cc", noseColor: "#b0c8ff", rarity: "common",  favoriteItems: ["carrot", "cushion"],       memento: "白い石",       power: 3 },
-  { id: "mochi",      name: "もち",       color: "#f0ebe0", earColor: "#e8d8c0", eyeColor: "#7a6040", noseColor: "#d4a0a0", rarity: "common",  favoriteItems: ["cabbage", "rock"],         memento: "丸い石",       power: 3 },
-  { id: "ten",        name: "てん",       color: "#d4b896", earColor: "#e8d0b0", eyeColor: "#333",    noseColor: "#ff9966", rarity: "rare",    favoriteItems: ["snack", "tunnel"],         memento: "星型の石",     power: 5 },
-  { id: "azuki",      name: "あずき",     color: "#8b4513", earColor: "#a0522d", eyeColor: "#fff",    noseColor: "#ffb6c1", rarity: "common",  favoriteItems: ["carrot", "cardboard"],    memento: "小豆色の石",   power: 3 },
-  { id: "mame",       name: "まめ",       color: "#90c060", earColor: "#b0d880", eyeColor: "#333",    noseColor: "#ff9999", rarity: "common",  favoriteItems: ["grass", "ball"],           memento: "豆の莢",       power: 3 },
-  { id: "sakura",     name: "さくら",     color: "#ffc0cb", earColor: "#ffaabb", eyeColor: "#333",    noseColor: "#ff6688", rarity: "rare",    favoriteItems: ["flower_patch", "cushion"], memento: "桜の花びら",   power: 5 },
-  { id: "hana",       name: "はな",       color: "#ffddee", earColor: "#ffbbcc", eyeColor: "#333",    noseColor: "#ff88aa", rarity: "rare",    favoriteItems: ["flower_patch", "snack"],   memento: "押し花",       power: 5 },
-  { id: "kaze",       name: "かぜ",       color: "#a8d8ea", earColor: "#c0e8f8", eyeColor: "#336699", noseColor: "#88bbdd", rarity: "rare",    favoriteItems: ["ball", "tunnel"],          memento: "羽根",         power: 5 },
-  { id: "umi",        name: "うみ",       color: "#4fc3f7", earColor: "#81d4fa", eyeColor: "#0d47a1", noseColor: "#29b6f6", rarity: "rare",    favoriteItems: ["rock", "grass"],           memento: "貝殻",         power: 5 },
-  { id: "mori",       name: "もり",       color: "#66bb6a", earColor: "#81c784", eyeColor: "#1b5e20", noseColor: "#a5d6a7", rarity: "rare",    favoriteItems: ["tunnel", "cardboard"],    memento: "どんぐり",     power: 5 },
-  { id: "sora",       name: "そら",       color: "#b3e5fc", earColor: "#81d4fa", eyeColor: "#0277bd", noseColor: "#4fc3f7", rarity: "rare",    favoriteItems: ["flower_patch", "cushion"], memento: "青い石",       power: 5 },
-  { id: "hoshi",      name: "ほし",       color: "#fff9c4", earColor: "#fff59d", eyeColor: "#f57f17", noseColor: "#ffe082", rarity: "special", favoriteItems: ["snack", "cushion"],        memento: "流れ星",       power: 8 },
-  { id: "tsuki",      name: "つき",       color: "#e8eaf6", earColor: "#c5cae9", eyeColor: "#303f9f", noseColor: "#9fa8da", rarity: "special", favoriteItems: ["flower_patch", "rock"],    memento: "月の形の石",   power: 8 },
-  { id: "hikari",     name: "ひかり",     color: "#fffde7", earColor: "#fff9c4", eyeColor: "#ff6f00", noseColor: "#ffe57f", rarity: "special", favoriteItems: ["snack", "flower_patch"],   memento: "光る石",       power: 8 },
-  { id: "natsu",      name: "なつ",       color: "#f9a825", earColor: "#fbc02d", eyeColor: "#e65100", noseColor: "#fb8c00", rarity: "special", favoriteItems: ["ball", "grass"],           memento: "夏の貝殻",     power: 8 },
-  { id: "fuyu",       name: "ふゆ",       color: "#e3f2fd", earColor: "#bbdefb", eyeColor: "#1565c0", noseColor: "#90caf9", rarity: "special", favoriteItems: ["cushion", "rock"],         memento: "雪の結晶",     power: 8 },
+  // ── コモン（身近なペット品種）──
+  { id: "netherland_dwarf",  name: "ネザーランドドワーフ",    color: "#f8f5f0", earColor: "#ffd0d0", eyeColor: "#cc2222", noseColor: "#ffaaaa", rarity: "common",  favoriteItems: ["carrot",  "cushion"],      memento: "小さな爪",         power: 3 },
+  { id: "holland_lop",       name: "ホーランドロップ",         color: "#c8905c", earColor: "#dda870", eyeColor: "#4a2800", noseColor: "#e09070", rarity: "common",  favoriteItems: ["cabbage", "cushion"],      memento: "垂れた柔らかい毛", power: 3 },
+  { id: "dutch",             name: "ダッチ",                   color: "#303030", earColor: "#505050", eyeColor: "#111111", noseColor: "#ffb6c1", rarity: "common",  favoriteItems: ["carrot",  "cardboard"],    memento: "白黒の毛束",       power: 3 },
+  { id: "mini_rex",          name: "ミニレッキス",             color: "#5a3020", earColor: "#7a4030", eyeColor: "#3a1a08", noseColor: "#d87050", rarity: "common",  favoriteItems: ["cabbage", "tunnel"],       memento: "ビロードの毛",     power: 3 },
+  { id: "japanese_white",    name: "ジャパニーズホワイト",     color: "#ffffff", earColor: "#ffe4e4", eyeColor: "#ee2020", noseColor: "#ffaaaa", rarity: "common",  favoriteItems: ["grass",   "ball"],         memento: "白い毛束",         power: 3 },
+  { id: "californian",       name: "カリフォルニアン",         color: "#f8f8f8", earColor: "#444444", eyeColor: "#bb1111", noseColor: "#cc6666", rarity: "common",  favoriteItems: ["carrot",  "grass"],        memento: "黒い耳の毛",       power: 3 },
+  { id: "mini_lop",          name: "ミニロップ",               color: "#e8c8a0", earColor: "#f0d8b0", eyeColor: "#5a3800", noseColor: "#d4a080", rarity: "common",  favoriteItems: ["ball",    "cushion"],      memento: "まるい毛玉",       power: 3 },
+  { id: "britannia_petite",  name: "ブリタニアプチ",           color: "#f4f0e8", earColor: "#e8e0d0", eyeColor: "#8b6914", noseColor: "#c8a080", rarity: "common",  favoriteItems: ["grass",   "tunnel"],       memento: "素早い足跡",       power: 3 },
+  // ── レア（珍しい品種・ショー品種）──
+  { id: "lionhead",          name: "ライオンヘッド",           color: "#e8c050", earColor: "#f0d070", eyeColor: "#5a3000", noseColor: "#e09060", rarity: "rare",    favoriteItems: ["snack",       "flower_patch"], memento: "たてがみの毛",     power: 5 },
+  { id: "angora",            name: "アンゴラ",                 color: "#f8f0e0", earColor: "#f0e8d0", eyeColor: "#8b6914", noseColor: "#d4b0a0", rarity: "rare",    favoriteItems: ["cushion",     "flower_patch"], memento: "絹のような毛糸",   power: 5 },
+  { id: "flemish_giant",     name: "フレミッシュジャイアント", color: "#909090", earColor: "#b0b0b0", eyeColor: "#333333", noseColor: "#cc9999", rarity: "rare",    favoriteItems: ["snack",       "rock"],         memento: "大きな足跡",       power: 5 },
+  { id: "english_spot",      name: "イングリッシュスポット",   color: "#f8f8f8", earColor: "#555555", eyeColor: "#333333", noseColor: "#ff88aa", rarity: "rare",    favoriteItems: ["ball",        "cardboard"],    memento: "斑点模様の毛",     power: 5 },
+  { id: "belgian_hare",      name: "ベルジアンハーレ",         color: "#9b4523", earColor: "#b05030", eyeColor: "#333333", noseColor: "#d47060", rarity: "rare",    favoriteItems: ["grass",       "tunnel"],       memento: "赤茶の毛",         power: 5 },
+  { id: "lilac",             name: "ライラック",               color: "#c8a8c8", earColor: "#d8b8d8", eyeColor: "#6a3a8a", noseColor: "#c090c0", rarity: "rare",    favoriteItems: ["flower_patch","cushion"],      memento: "薄紫の毛",         power: 5 },
+  // ── スペシャル（日本在来種・希少種）──
+  { id: "nihon_usagi",       name: "ニホンノウサギ",           color: "#c8a460", earColor: "#dcc070", eyeColor: "#4a3010", noseColor: "#c89060", rarity: "special", favoriteItems: ["grass",       "flower_patch"], memento: "野の花",           power: 8 },
+  { id: "ezo_snowshoe",      name: "エゾユキウサギ",           color: "#f0f8ff", earColor: "#ddeeff", eyeColor: "#5577aa", noseColor: "#99bbdd", rarity: "special", favoriteItems: ["rock",        "grass"],         memento: "雪色の毛",         power: 8 },
+  { id: "amami",             name: "アマミノクロウサギ",       color: "#2a1a0a", earColor: "#3a2a18", eyeColor: "#8b4513", noseColor: "#b06040", rarity: "special", favoriteItems: ["snack",       "rock"],          memento: "漆黒の毛",         power: 8 },
+  { id: "naki_usagi",        name: "エゾナキウサギ",           color: "#9a8870", earColor: "#b0a080", eyeColor: "#5a4830", noseColor: "#c09070", rarity: "special", favoriteItems: ["snack",       "flower_patch"],  memento: "草の束",           power: 8 },
 ];
 
 // ===== アイテムデータ =====
