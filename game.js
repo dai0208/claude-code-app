@@ -77,33 +77,35 @@ function drawRabbit(rabbit) {
   const ec = rabbit.earColor;
   const eye = rabbit.eyeColor;
   const nose = rabbit.noseColor;
+  const ol = "rgba(70,35,0,0.32)";
+  const sw = "1.6";
 
   return `<svg viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
   <!-- 耳（外） -->
-  <ellipse cx="18" cy="16" rx="8" ry="19" fill="${bc}"/>
-  <ellipse cx="42" cy="16" rx="8" ry="19" fill="${bc}"/>
+  <ellipse cx="18" cy="16" rx="8" ry="19" fill="${bc}" stroke="${ol}" stroke-width="${sw}"/>
+  <ellipse cx="42" cy="16" rx="8" ry="19" fill="${bc}" stroke="${ol}" stroke-width="${sw}"/>
   <!-- 耳（内） -->
   <ellipse cx="18" cy="17" rx="4.5" ry="14" fill="${ec}"/>
   <ellipse cx="42" cy="17" rx="4.5" ry="14" fill="${ec}"/>
   <!-- 体 -->
-  <ellipse cx="30" cy="52" rx="22" ry="18" fill="${bc}"/>
+  <ellipse cx="30" cy="52" rx="22" ry="18" fill="${bc}" stroke="${ol}" stroke-width="${sw}"/>
   <!-- 顔 -->
-  <ellipse cx="30" cy="37" rx="16" ry="15" fill="${bc}"/>
+  <ellipse cx="30" cy="37" rx="16" ry="15" fill="${bc}" stroke="${ol}" stroke-width="${sw}"/>
   <!-- 目（白） -->
-  <circle cx="24" cy="34" r="4" fill="#fff"/>
-  <circle cx="36" cy="34" r="4" fill="#fff"/>
+  <circle cx="24" cy="34" r="4" fill="#fff" stroke="${ol}" stroke-width="0.9"/>
+  <circle cx="36" cy="34" r="4" fill="#fff" stroke="${ol}" stroke-width="0.9"/>
   <!-- 目（瞳） -->
   <circle cx="24" cy="34" r="2.5" fill="${eye}"/>
   <circle cx="36" cy="34" r="2.5" fill="${eye}"/>
   <!-- ハイライト -->
-  <circle cx="25" cy="33" r="1" fill="rgba(255,255,255,0.7)"/>
-  <circle cx="37" cy="33" r="1" fill="rgba(255,255,255,0.7)"/>
+  <circle cx="25" cy="33" r="1" fill="rgba(255,255,255,0.8)"/>
+  <circle cx="37" cy="33" r="1" fill="rgba(255,255,255,0.8)"/>
   <!-- 鼻 -->
-  <ellipse cx="30" cy="40" rx="2.5" ry="2" fill="${nose}"/>
+  <ellipse cx="30" cy="40" rx="2.5" ry="2" fill="${nose}" stroke="${ol}" stroke-width="0.7"/>
   <!-- 口 -->
-  <path d="M27 42 Q30 44.5 33 42" stroke="${nose}" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M27 42 Q30 44.5 33 42" stroke="${nose}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
   <!-- しっぽ -->
-  <circle cx="48" cy="52" r="6" fill="rgba(255,255,255,0.85)"/>
+  <circle cx="48" cy="52" r="6" fill="rgba(255,255,255,0.9)" stroke="${ol}" stroke-width="0.9"/>
 </svg>`;
 }
 
@@ -461,10 +463,15 @@ function photographRabbit(slotId, rabbitId) {
   const bonus = isNew ? rabbit.power * 3 : rabbit.power;
   state.carrots += bonus;
 
+  // ウサギをマスから消す
+  const stateSlot = state.yard[slotId];
+  if (stateSlot) stateSlot.rabbit = null;
+
   showBanner(rabbit);
   saveState();
   updateHeader();
   renderAlbum();
+  renderYard();
 }
 
 // ===== ゲームループ =====
