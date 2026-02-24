@@ -300,7 +300,7 @@ function renderShop() {
         <div class="shop-icon">${item.icon}</div>
         <div class="shop-name">${item.name}</div>
         <div class="shop-type">${item.type === "food" ? "食べ物" : "おもちゃ"} / 容量${item.capacity}</div>
-        <div class="shop-cost">🥕 ${item.cost}</div>
+        <div class="shop-cost">🪙 ${item.cost}</div>
         <div class="shop-own">所持: ${own}個</div>
         <button class="btn-buy" ${canAfford ? "" : "disabled"}>購入</button>
       `;
@@ -320,7 +320,7 @@ function buyItem(itemId) {
   const item = getItem(itemId);
   if (!item) return;
   if (state.coins < item.cost) {
-    showToast("にんじんが足りません！");
+    showToast("コインが足りません！");
     return;
   }
   state.coins -= item.cost;
@@ -328,7 +328,7 @@ function buyItem(itemId) {
   saveState();
   renderShop();
   updateHeader();
-  showToast(`${item.name} を購入しました！ 🥕`);
+  showToast(`${item.name} を購入しました！ 🪙`);
 }
 
 // ===== アイテム配置モーダル =====
